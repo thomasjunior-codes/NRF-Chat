@@ -1,13 +1,13 @@
-# 📡 NRF-Chat (ESP8266 + nRF24L01 Chat System)
+# 📡 nRF-Chat (ESP8266 + nRF24L01+PA+LNA Chat System)
 
-A lightweight **offline chat system** built using **ESP8266** and **nRF24L01** modules.
+A lightweight **offline chat system** built using **ESP8266** and **nRF24L01+PA+LNA** modules.
 This project creates a **WiFi-based chat UI** that communicates wirelessly using RF — no internet required.
 
 ---
 
 ## 🚀 Features
 
-* 📶 **Wireless communication (nRF24L01)**
+* 📶 **Long-range wireless communication (PA+LNA)**
 * 📱 **Mobile-friendly web chat UI**
 * 🌙 **Dark mode interface (always on)**
 * ⌨️ **Typing indicator**
@@ -22,24 +22,61 @@ This project creates a **WiFi-based chat UI** that communicates wirelessly using
 ## 🧰 Hardware Required
 
 * 2 × ESP8266 (NodeMCU / Wemos D1 Mini)
-* 2 × nRF24L01 modules
+* 2 × nRF24L01+PA+LNA modules (with external antenna)
 * Jumper wires
 * Breadboard
-* 3.3V stable power supply (⚠️ IMPORTANT for nRF24L01)
+* 🔋 Stable 3.3V power supply (**CRITICAL**)
+* ⚡ Capacitor (10µF – 100µF recommended)
 
 ---
 
-## 🔌 Wiring (ESP8266 ↔ nRF24L01)
+## 🔌 Wiring (ESP8266 ↔ nRF24L01+PA+LNA)
 
-| nRF24L01 | ESP8266     |
-| -------- | ----------- |
-| VCC      | 3.3V        |
-| GND      | GND         |
-| CE       | D2 (GPIO4)  |
-| CSN      | D1 (GPIO5)  |
-| SCK      | D5 (GPIO14) |
-| MOSI     | D7 (GPIO13) |
-| MISO     | D6 (GPIO12) |
+| nRF24L01+PA+LNA | ESP8266     |
+| --------------- | ----------- |
+| VCC             | 3.3V        |
+| GND             | GND         |
+| CE              | D2 (GPIO4)  |
+| CSN             | D1 (GPIO5)  |
+| SCK             | D5 (GPIO14) |
+| MOSI            | D7 (GPIO13) |
+| MISO            | D6 (GPIO12) |
+
+---
+
+## ⚡ Power Stability (IMPORTANT)
+
+The **nRF24L01+PA+LNA module requires stable power** and can draw high current during transmission.
+Without proper filtering, you may experience:
+
+* ❌ Message loss
+* ❌ Random disconnects
+* ❌ Reduced range
+* ❌ Module not detected
+
+### ✅ Solution: Add Capacitor
+
+Connect a capacitor directly across VCC and GND:
+
+```
+VCC ----||---- GND
+        ||
+     Capacitor
+```
+
+### 🔧 Recommended Values:
+
+* Minimum: **10µF**
+* Best: **47µF – 100µF electrolytic capacitor**
+
+### 📌 Tips:
+
+* Place capacitor **as close as possible** to the module pins
+* Observe polarity:
+
+  * Long leg → VCC
+  * Short leg → GND
+* For best performance, use **external 3.3V regulator** (not ESP8266 3.3V pin)
 
 ---
 
@@ -57,7 +94,7 @@ Install via Arduino Library Manager:
 ## ⚙️ How It Works
 
 1. ESP8266 creates a **WiFi Access Point**
-2. Open browser → connect to device IP (`192.168.4.1`)
+2. Open browser → connect to device (`192.168.4.1`)
 3. Messages are:
 
    * Sent via HTTP → ESP8266
@@ -74,15 +111,16 @@ Install via Arduino Library Manager:
 ## 🛠️ Setup Instructions
 
 1. Connect hardware as per wiring table
-2. Upload code to both ESP8266 devices
-3. Power both modules
-4. Connect your phone to:
+2. Add capacitor between VCC & GND
+3. Upload code to both ESP8266 devices
+4. Power both modules
+5. Connect your phone to:
 
    ```
    SSID: NodeA_Chat
    Password: 12345678
    ```
-5. Open browser:
+6. Open browser:
 
    ```
    http://192.168.4.1
@@ -92,13 +130,10 @@ Install via Arduino Library Manager:
 
 ## ⚠️ Important Notes
 
-* nRF24L01 is **very sensitive to power**
-
-  * Use capacitor (10µF–100µF) across VCC & GND
+* PA+LNA modules consume **higher current than normal nRF24L01**
+* Always use **external power source + capacitor**
 * Max payload = **32 bytes**
-
-  * Longer messages may truncate
-* Range depends on environment (walls, interference)
+* Range depends on antenna & environment
 
 ---
 
@@ -107,47 +142,30 @@ Install via Arduino Library Manager:
 * ❌ No message history persistence
 * ❌ No group chat
 * ❌ Limited payload size (32 bytes)
-* ❌ Basic encryption (not secure for real-world use)
+* ❌ Basic encryption (not secure for production)
 
 ---
 
 ## 🔮 Future Improvements
 
 * 📅 Message timestamps
-* 👥 Group chat support
-* 💾 EEPROM / SPIFFS message storage
-* 🔒 Strong encryption (AES)
-* 📡 Range optimization
-* 📲 Installable PWA (app-like experience)
-
----
-
-## 📸 Preview
-
-Simple WhatsApp-style dark UI with:
-
-* Chat bubbles
-* Typing indicator
-* Signal bars
+* 👥 Group chat
+* 💾 Storage (SPIFFS / EEPROM)
+* 🔒 AES encryption
+* 📡 Mesh networking
+* 📲 PWA support
 
 ---
 
 ## 🤝 Contributing
 
 Pull requests are welcome!
-Feel free to improve UI, performance, or add features.
 
 ---
 
 ## 📜 License
 
-This project is open-source and free to use.
-
----
-
-## 👨‍💻 Author
-
-Developed by **[Your Name]**
+Open-source and free to use.
 
 ---
 
