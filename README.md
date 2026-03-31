@@ -42,6 +42,8 @@ This project creates a **WiFi-based chat UI** that communicates wirelessly using
 | MOSI            | D7 (GPIO13) |
 | MISO            | D6 (GPIO12) |
 
+<img width="1177" height="1109" alt="nrf connection" src="https://github.com/user-attachments/assets/4813df5d-c913-4447-8562-e75eeb8661e0" />
+
 ---
 
 ## ⚡ Power Stability (IMPORTANT)
