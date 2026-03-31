@@ -3,6 +3,8 @@
 A lightweight **offline chat system** built using **ESP8266** and **nRF24L01+PA+LNA** modules.
 This project creates a **WiFi-based chat UI** that communicates wirelessly using RF — no internet required.
 
+During natural disasters like earthquakes, floods, or cyclones, traditional communication networks (mobile towers, internet) often fail. NRF-Gram’s ~1KM RF range (with nRF24L01+PA+LNA) enables reliable, direct device-to-device messaging without any infrastructure—so even during a blackout, you can stay connected with nearby people, including your favorite neighbor.
+
 ---
 
 ## 🚀 Features
